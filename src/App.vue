@@ -31,7 +31,7 @@ import firebase from './firebase'
 const auth = firebase.auth()
 const db = firebase.database()
 
-const todosRef = window.todosRef = db.ref('todos')
+const todosRef = db.ref('todos')
 
 export default {
   data() {
@@ -61,7 +61,7 @@ export default {
   },
   methods: {
     addTodo() {
-      if (!this.newTodoText || !todosRef || !this.user) {
+      if (!this.newTodoText || !this.user) {
         return
       }
       todosRef.push({
@@ -72,16 +72,9 @@ export default {
       })
     },
     updateTodoText(todo, newText) {
-      if (!todosRef) {
-        return
-      }
       todosRef.child(todo['.key']).child('text').set(newText)
     },
     removeTodo(todo) {
-      if (!todosRef) {
-        return
-      }
-      console.log(todo, todo.key)
       todosRef.child(todo['.key']).remove()
     }
   }
