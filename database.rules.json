@@ -1,0 +1,19 @@
+{
+  "rules": {
+    "todos": {
+      ".read": "auth !== null",
+      "$todo_id": {
+        ".write": "!data.exists() || data.child('owner').val() === auth.uid",
+        "text": {
+           ".validate": "newData.isString() && newData.val().length < 140"
+        },
+        "owner": {
+          ".validate": "!data.exists()"
+        },
+        "$other": {
+        	".validate": false
+        }
+      }
+    }
+  }
+}
